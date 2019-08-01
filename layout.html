@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>lsmod graph</title>
+
+    <script type="text/javascript" src="/vis/vis.js"></script>
+    <link href="/vis/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        #mynetwork {
+            width: 70%;
+            height: 800px;
+            margin: auto;
+            border: 3px solid green;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<p>
+    lsmod:
+</p>
+
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    sleep(3000);
+    console.log("done");
+
+    var nodes = new vis.DataSet([
+        {{range .Nodes}}
+        {id:{{.Id}}, label:{{.Label}}},
+        {{end}}
+    ]);
+    var edges = new vis.DataSet([
+        {{range .Edges}}
+        {from:{{.From}}, to:{{.To}}, arrows:'to'},
+        {{end}}
+    ]);
+
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {
+    };
+    var network = new vis.Network(container, data, options);
+</script>
+
+
+</body>
+</html>
